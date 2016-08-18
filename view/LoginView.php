@@ -28,6 +28,7 @@ class LoginView{
     public $message;
     public $isUsernameAvailable = null;
     private static $loginURL = "login";
+    private static $backButton = "";
 
     /**
      * LoginView constructor.
@@ -135,8 +136,7 @@ class LoginView{
      */
     private function generateLoginFormHTML($message) {
 
-        $up= new UploadView();
-        echo $up->showBackButton();
+        echo $this->showBackButton();
         echo ' ';
         echo $this->showRegisterButton();
         return '
@@ -162,10 +162,10 @@ class LoginView{
      * @return string
      */
     private function generateRegisterFormHTML($message) {
-        $up= new UploadView();
-        echo $up->showBackButton();
+
+        echo $this->showBackButton();
         echo ' ';
-        echo $up->showloginButton();
+        echo $this->showloginButton();
         return '
 			<form action ="" method="post" >
 				<fieldset>
@@ -276,6 +276,14 @@ class LoginView{
      */
     public function showloginButton(){
         return "<a href='?" . self::$loginURL. "'> Sign in</a>";
+    }
+
+    /**
+     * Shows a link back to root
+     * @return string
+     */
+    public function showBackButton(){
+        return "<a href='?" . self::$backButton. "'> Back to Start</a>";
     }
 
     /**

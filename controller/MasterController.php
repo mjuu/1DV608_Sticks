@@ -13,28 +13,21 @@ use view\Sticks;
 
 class MasterController
 {
-    private $uploadView;
-    private $view;
     private $loginView;
     private $loginDal;
     private $loginCont;
     private $loggedU;
-
     private $stickV;
 
     /**
      * MasterController constructor.
      * @param Sticks $stV
-     * @param \view\UploadView $uploadView
-     * @param \view\View $view
      * @param \view\LoginView $lv
      * @param \model\LoginDAL $ld
      * @param LoginController $loginC
      */
-    public function __construct( \view\Sticks $stV ,\view\UploadView $uploadView, \view\View $view,\view\LoginView $lv, \model\LoginDAL $ld, \controller\LoginController $loginC)
+    public function __construct( \view\Sticks $stV ,\view\LoginView $lv, \model\LoginDAL $ld, \controller\LoginController $loginC)
     {
-        $this->uploadView = $uploadView;
-        $this->view = $view;
         $this->loginView = $lv;
         $this->loginDal= $ld;
         $this->loginCont = $loginC;

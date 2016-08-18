@@ -15,6 +15,12 @@ require_once("view/LoginView.php");
 require_once("view/LoggedUser.php");
 require_once("conf/conf.php");
 require_once("view/SticksView.php");
+require_once("Settings.php");
+
+if (Settings::DISPLAY_ERRORS) {
+    	error_reporting(-1);
+    	ini_set('display_errors', 'ON');
+    }
 
 session_start();
 
@@ -22,11 +28,9 @@ $stV = new view\Sticks();
 $loggU = new \view\LoggedUser();
 
 $lv = new \view\LoginView();
-$up = new \view\UploadView();
-$v = new view\View();
 
 $ld = new \model\LoginDAL();
 $lc = new \controller\LoginController($loggU,$lv,$ld);
-$c = new controller\MasterController($stV,$up,$v, $lv, $ld, $lc);
+$c = new controller\MasterController($stV, $lv, $ld, $lc);
 
 $c->doControl();
