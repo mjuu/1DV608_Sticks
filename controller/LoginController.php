@@ -1,43 +1,68 @@
 <?php
 /**
-  * Solution for assignment 2
-  * @author Daniel Toll
-  */
+ * Created by PhpStorm.
+ * User: Benjamin
+ * Date: 2016-08-18
+ * Time: 18:47
+ */
 namespace controller;
 
-require_once("model/LoginModel.php");
-require_once("view/LoginView.php");
+class LoginController{
 
-class LoginController {
+    private $loggedU;
+    private $loginView;
+    private $loginDal;
 
-	private $model;
-	private $view;
+    /**
+     * LoginController constructor.
+     * @param \view\LoggedUser $loggedUser
+     * @param \view\LoginView $lv
+     * @param \model\LoginDAL $ld
+     */
+    public function __construct( \view\LoggedUser $loggedUser ,\view\LoginView $lv, \model\LoginDAL $ld)
+    {
+        $this->loggedU = $loggedUser;
+        $this->loginView = $lv;
+        $this->loginDal= $ld;
+    }
 
-	public function __construct(\model\LoginModel $model, \view\LoginView $view) {
-		$this->model = $model;
-		$this->view =  $view;
-	}
+    /**
+     * Control login functions
+     */
+    public function control(){
+        //Show login page
+        if($this->loginView->loggedIN()!=1){
+            $this->loginView->render();
+        }
+        //user clicked on login button and want to login
+        if($this->loginView->wantToLogin() == true){
+            $this->loginView->login();
+            /*TODO*/
+            /** Write better redirect function */
+            if($this->loginView->loggedIN()==1){
+               $this->loginView->redirect();
 
-	public function doControl() {
-		
-		$userClient = $this->view->getUserClient();
+             //  $this->loginView->render();
+             //   $this->loginView->refreshPage();
+            }
+        }
 
-		if ($this->model->isLoggedIn($userClient)) {
-			if ($this->view->userWantsToLogout()) {
-				$this->model->doLogout();
-				$this->view->setUserLogout();
-			}
-		} else {
-			
-			if ($this->view->userWantsToLogin()) {
-				$uc = $this->view->getCredentials();
-				if ($this->model->doLogin($uc) == true) {
-					$this->view->setLoginSucceeded();
-				} else {
-					$this->view->setLoginFailed();
-				}
-			}
-		}
-		$this->model->renew($userClient);
-	}
+    }
+
+    /**
+     * Do register controls
+     */
+    public function registerControl(){
+        //Checks user input
+        $this->loginView->doRegister();
+        //User want to register
+        if($this->loginView->wantToRegister() == true){
+            //do register
+
+               if($this->loginView->checkName() == true){
+                   $this->loginView->register();
+               }else{
+               }
+        }
+    }
 }

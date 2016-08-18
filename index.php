@@ -1,33 +1,32 @@
 <?php
- /**
-  * Solution for assignment 2
-  * @author Daniel Toll
-  */
-require_once("Settings.php");
+/**
+ * Created by PhpStorm.
+ * User: Benjamin
+ * Date: 2015-10-26
+ * Time: 20:35
+ */
+
+
+require_once("controller/MasterController.php");
 require_once("controller/LoginController.php");
-require_once("view/DateTimeView.php");
-require_once("view/LayoutView.php");
+require_once("model/LoginDAL.php");
+require_once("model/DBConn.php");
+require_once("view/LoginView.php");
+require_once("view/LoggedUser.php");
+require_once("conf/conf.php");
+require_once("view/SticksView.php");
 
-if (Settings::DISPLAY_ERRORS) {
-	error_reporting(-1);
-	ini_set('display_errors', 'ON');
-}
+session_start();
 
-//session must be started before LoginModel is created
-session_start(); 
+$stV = new view\Sticks();
+$loggU = new \view\LoggedUser();
 
-//Dependency injection
-$m = new \model\LoginModel();
-$v = new \view\LoginView($m);
-$c = new \controller\LoginController($m, $v);
+$lv = new \view\LoginView();
+$up = new \view\UploadView();
+$v = new view\View();
 
+$ld = new \model\LoginDAL();
+$lc = new \controller\LoginController($loggU,$lv,$ld);
+$c = new controller\MasterController($stV,$up,$v, $lv, $ld, $lc);
 
-//Controller must be run first since state is changed
 $c->doControl();
-
-
-//Generate output
-$dtv = new \view\DateTimeView();
-$lv = new \view\LayoutView();
-$lv->render($m->isLoggedIn($v->getUserClient()), $v, $dtv);
-
