@@ -9,9 +9,10 @@ namespace controller;
 
 class LoginController{
 
-    private $loggedU;
-    private $loginView;
+    public $loggedU;
+    public $loginView;
     private $loginDal;
+    public $stickC;
 
     /**
      * LoginController constructor.
@@ -19,8 +20,9 @@ class LoginController{
      * @param \view\LoginView $lv
      * @param \model\LoginDAL $ld
      */
-    public function __construct( \view\LoggedUser $loggedUser ,\view\LoginView $lv, \model\LoginDAL $ld)
+    public function __construct( \view\LoggedUser $loggedUser ,\view\LoginView $lv, \model\LoginDAL $ld, \controller\SticksController $sticksController)
     {
+        $this->stickC=$sticksController;
         $this->loggedU = $loggedUser;
         $this->loginView = $lv;
         $this->loginDal= $ld;

@@ -18,21 +18,25 @@ class MasterController
     private $loginCont;
     private $loggedU;
     private $stickV;
+    private $stickCon;
 
     /**
      * MasterController constructor.
-     * @param Sticks $stV
+     * @param \view\SticksView $stV
      * @param \view\LoginView $lv
      * @param \model\LoginDAL $ld
      * @param LoginController $loginC
+     * @param SticksController $sticksController
+     * @param LoggedUser $loggedUser
      */
-    public function __construct( \view\Sticks $stV ,\view\LoginView $lv, \model\LoginDAL $ld, \controller\LoginController $loginC)
+    public function __construct( \view\SticksView $stV ,\view\LoginView $lv, \model\LoginDAL $ld, \controller\LoginController $loginC, \controller\SticksController $sticksController, \view\LoggedUser $loggedUser)
     {
         $this->loginView = $lv;
         $this->loginDal= $ld;
         $this->loginCont = $loginC;
-        $this->loggedU = new LoggedUser();
+        $this->loggedU = $loggedUser;
         $this->stickV = $stV;
+        $this->stickCon = $sticksController;
 
     }
 
@@ -40,25 +44,33 @@ class MasterController
      * Control this webbpage.
      */
     public function doControl(){
-
+        
         //If user want to register pass them to register controller
         if($this->loginView->wantToRegisterURL()==true){
             $this->loginCont->registerControl();
             //Else if user is logged in and member url typed, show member page
-        }
-        //If user is logged in, redirect them to member area
+        } //If user is logged in, redirect them to member area
         elseif($this->loginView->loggedIN() == 1){
             //If "member" is typed in url, send to member page
-            if ($this->loggedU->memberPage() == true) {
-                $this->loggedU->render();
+            if ($this->loggedU->memberPage() == true){
+              //  $this->loggedU->render();
+                //$this->stickV->render();
+                $this->stickV->renderFallback();
+
+            }elseif($this->stickV->draw1Clicked()||$this->stickV->draw2Clicked()||$this->stickV->draw3Clicked()===true) {
+                $this->stickCon->doControl();
             }else{
                 //send user back to member page if url is altered
-                $this->loggedU->render();
+                $this->stickV->renderV1();
             }//do logout
             if ($this->loggedU->getLogout() == true) {
                 $this->loggedU->doLogout();
             }
-        }//if use is not logged in, show login page
+        }elseif($this->stickV->restartClicked()==true){
+            $this->stickV->renderV1();
+
+        }
+        //if use is not logged in, show login page
         else{
             $this->loginCont->control();
         }

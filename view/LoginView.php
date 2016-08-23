@@ -30,6 +30,7 @@ class LoginView{
     private static $loginURL = "login";
     private static $backButton = "";
 
+
     /**
      * LoginView constructor.
      */
@@ -136,23 +137,30 @@ class LoginView{
      */
     private function generateLoginFormHTML($message) {
 
-        echo $this->showBackButton();
-        echo ' ';
-        echo $this->showRegisterButton();
+
         return '
-			<form action ="" method="post" >
+          <html>
+          <head>
+             <title>Sticks Login</title>
+             <meta charset="UTF-8">
+             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+             <meta name="theme-color" content="yellow">
+          </head>
+          <nav>'.$this->showBackButton().''.$this->showRegisterButton().'</nav>
+          <body>	
+				<form action ="" method="post" >
 				<fieldset>
 					<legend>Login - enter Username and password</legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
-
 					<label for="' . self::$username . '">Username :</label>
 					<input type="text" id="' . self::$username . '" name="' . self::$username . '" value="" />
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
-
 					<input type="submit" name="' . self::$login . '" value="login" />
 				</fieldset>
 			</form>
+          </body>
+        </html>		
 		';
     }
 
@@ -162,16 +170,20 @@ class LoginView{
      * @return string
      */
     private function generateRegisterFormHTML($message) {
-
-        echo $this->showBackButton();
-        echo ' ';
-        echo $this->showloginButton();
         return '
-			<form action ="" method="post" >
+          <html>
+          <head>
+             <title>Sticks Login</title>
+             <meta charset="UTF-8">
+             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+             <meta name="theme-color" content="blue">
+          </head>
+          <nav>'.$this->showBackButton().''.$this->showRegisterButton().'</nav>
+          <body>	
+				<form action ="" method="post" >
 				<fieldset>
 					<legend>Register a new account </legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
-
 					<label for="' . self::$usernameReg . '">Username :</label>
 					<input type="text" id="' . self::$usernameReg . '" name="' . self::$usernameReg . '" value="" />
 					<br>
@@ -180,10 +192,11 @@ class LoginView{
                     <br>
 					<label for="' . self::$repassword . '">Retype Password :</label>
 					<input type="password" id="' . self::$repassword . '" name="' . self::$repassword . '" />
-
 					<input type="submit" name="' . self::$registerButton . '" value="register" />
 				</fieldset>
 			</form>
+          </body>
+        </html>	
 		';
     }
 
@@ -298,7 +311,7 @@ class LoginView{
      * Redirect user back to the member area
      */
     public function redirect() {
-        header("Location: ?member");
+        header("Location: ?restart");
     }
 
     public function refreshPage(){

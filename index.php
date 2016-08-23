@@ -9,11 +9,15 @@
 
 require_once("controller/MasterController.php");
 require_once("controller/LoginController.php");
+require_once ("controller/SticksController.php");
 require_once("model/LoginDAL.php");
 require_once("model/DBConn.php");
+require_once ("model/SticksModel.php");
+require_once ("model/DrawModel.php");
 require_once("view/LoginView.php");
 require_once("view/LoggedUser.php");
-require_once("conf/conf.php");
+require_once ("conf/conf.php");
+//require_once("conf/conf.php");
 require_once("view/SticksView.php");
 require_once("Settings.php");
 
@@ -24,13 +28,15 @@ if (Settings::DISPLAY_ERRORS) {
 
 session_start();
 
-$stV = new view\Sticks();
+$stickV = new view\SticksView();
+$lv = new \view\LoginView();
+$ld = new \model\LoginDAL();
 $loggU = new \view\LoggedUser();
 
-$lv = new \view\LoginView();
+$stC = new controller\SticksController($stickV,$loggU);
 
-$ld = new \model\LoginDAL();
-$lc = new \controller\LoginController($loggU,$lv,$ld);
-$c = new controller\MasterController($stV, $lv, $ld, $lc);
+$lc = new \controller\LoginController($loggU,$lv,$ld, $stC);
+
+$c = new controller\MasterController($stickV, $lv, $ld, $lc,$stC,$loggU);
 
 $c->doControl();
