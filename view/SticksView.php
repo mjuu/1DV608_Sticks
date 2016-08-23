@@ -113,7 +113,11 @@ class SticksView
         }
     }
     public function redirect(){
-        return header("Location:?start");
+        return header("Location:?restart");
+    }
+
+    public function refresh(){
+        return header("Refresh:0");
     }
 
     public function checkIfDraw(){
@@ -184,7 +188,6 @@ class SticksView
             echo $this->printSticks(0,0);
             $this->finnished = true;
         }else{
-            // echo $this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($slk));
             echo $this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($this->stickModel->getArr()));
         }
 
@@ -196,7 +199,6 @@ class SticksView
         echo $this->htmlEnd();
     }
     public function renderFallback(){
-
 
         if($this->sticksLeft>0){
             $this->backupArr = array_fill(1,$this->sticksLeft, 'A');
@@ -211,7 +213,7 @@ class SticksView
             $this->finnished = true;
         }
         if(count($this->backupArr>0)){
-            $this->printSticks($this->sticksLeft,$this->stickModel->printArr($this->backupArr));
+            echo $this->printSticks($this->sticksLeft,$this->stickModel->printArr($this->backupArr));
         }else{
             $this->printSticks($this->sticksLeft,0);
         }

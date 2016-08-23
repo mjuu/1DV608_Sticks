@@ -44,8 +44,6 @@ class LoginController{
             if($this->loginView->loggedIN()==1){
                $this->loginView->redirect();
 
-             //  $this->loginView->render();
-             //   $this->loginView->refreshPage();
             }
         }
 

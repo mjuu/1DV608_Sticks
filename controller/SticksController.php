@@ -38,4 +38,15 @@ class SticksController{
 
         }
 
+        public function refreshPage(){
+            $refreshed = 0;
+            if($this->stickV->restartClicked()==true){
+                if($refreshed=0){
+                    $this->stickV->refresh();
+                    $refreshed=1;
+                }
+
+            }
+        }
+
 }
