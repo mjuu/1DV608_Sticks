@@ -27,7 +27,9 @@ class SticksView{
     public $dfull;
     public $loggedU;
     public $sticksLeft;
+    public $tempArr;
     public $backupArr;
+
 
     public $finnished;
 
@@ -45,6 +47,8 @@ class SticksView{
         if($this->restartGame()==true){
             $this->stickModel->setArr(22);
         }
+
+        $this->tempArr =$this->stickModel->getArr();
     }
 
     public function draw1(){
@@ -128,12 +132,6 @@ class SticksView{
     }
 
     public function renderV1(){
-
-        //echo 'USER :'.$draw;
-        echo '<br>';
-        //echo $this->stickModel->cpu();
-        //$this->stickModel->calcD($draw);
-
         echo $this->htmlStart();
         echo $this->headStart();
         echo $this->nav();
@@ -144,8 +142,7 @@ class SticksView{
             echo $this->printSticks(0,0);
             $this->finnished = true;
         }else{
-           // echo $this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($slk));
-           echo $this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($this->stickModel->getArr()));
+            echo $this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($this->stickModel->getArr()));//
         }
 
        if($this->finnished !=true){
@@ -156,12 +153,10 @@ class SticksView{
         echo $this->htmlEnd();
     }
 
-    public function renderV2(){
 
-        //echo 'USER :'.$draw;
+    public function renderV2(){
         echo '<br>';
         echo $this->stickModel->cpu();
-        //$this->stickModel->calcD($draw);
 
         echo $this->htmlStart();
         echo $this->headStart();
@@ -170,10 +165,10 @@ class SticksView{
         echo $this->userWelcome();
 
         if($this->arraySizeCheck()===0){
-            echo $this->printSticks(0,0);
+            echo $this->printSticks('0','Restart if you want to play again');
             $this->finnished = true;
         }else{
-            echo $this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($this->stickModel->getArr()));
+           echo $this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($this->stickModel->getArr()));
         }
 
         if($this->finnished !=true){
@@ -183,6 +178,8 @@ class SticksView{
         echo $this->bodyEnd();
         echo $this->htmlEnd();
     }
+
+
     public function renderFallback(){
 
         if($this->sticksLeft>0){
@@ -198,18 +195,18 @@ class SticksView{
             $this->finnished = true;
         }
         if(count($this->backupArr>0)){
-            echo $this->printSticks($this->sticksLeft,$this->stickModel->printArr($this->backupArr));
+
+             echo $this->printSticks($this->sticksLeft,$this->stickModel->printArr($this->backupArr));
+
         }else{
-            $this->printSticks($this->sticksLeft,0);
+            $this->printSticks($this->sticksLeft,'2');
         }
 
         if($this->finnished !=true){
             echo $this->drawStick();
         }else{
-           // echo $this->showStartButton();
             echo $this->showRestartButton();
         }
-
         echo $this->bodyEnd();
         echo $this->htmlEnd();
     }
@@ -219,7 +216,6 @@ class SticksView{
             return 0;
         }
     }
-
 
     public function htmlStart(){
         return '
@@ -264,6 +260,7 @@ class SticksView{
      <p><h2>There is '.$sticksValue.' sticks left</h2></p>
      <p style=\'font-family: "Courier New", Courier, monospace\'>'.$printSticks.'</p>';
     }
+
     public function drawStick(){
         return '
      <p><h2>Select number of sticks</h2></p>
@@ -273,6 +270,10 @@ class SticksView{
 			 <li>'.$this->showDraw2(). ' 2 sticks</a></li>
 			 <li>'.$this->showDraw3(). ' 3 sticks</a></li>
 		</ol>';
+    }
+
+    public function showSticks(){
+        return '<p>'.$this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($this->stickModel->getArr())).'</p>';
     }
     public function showStartButton(){
         return "<a href='?" . self::$startG . "'> Play!</a>";

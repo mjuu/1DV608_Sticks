@@ -9,6 +9,7 @@ namespace model;
 class StickModel{
 
     public $array1;
+    public $temp='';
 
     public function setArray(){
         $this->setArr(22);
@@ -44,16 +45,10 @@ class StickModel{
         return $this->array1=array_splice($this->array1,$value);
     }
 
-
     public function printArr($arr){
+        return implode('',$arr);
+   }
 
-        if(empty($arr)==false){
-            foreach ($arr as $i =>$value) {
-                echo $value;
-            }
-        }
-
-    }
 
     /**
      * @param $arr
