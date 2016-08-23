@@ -7,16 +7,10 @@
  */
 
 namespace view;
-use model\DrawModel;
 use model\StickModel;
-use view\LoggedUser;
-
 require_once ("model/SticksModel.php");
-class SticksView
-{
-    private static $logout = 'LoginView::Logout';
-    private static $username = 'LoginView::UserName';
-    private static $password = 'LoginView::Password';
+class SticksView{
+
     private static $draw1 = 'draw::1';
     private static $draw2 = 'draw::2';
     private static $draw3 = 'draw::3';
@@ -78,37 +72,28 @@ class SticksView
         }
     }
     public function render1(){
-
-       // $this->renderV1(1);
         $this->stickModel->calcD(1);
         echo 'USER : 1';
         $this->renderV2();
     }
     public function render2(){
-
-       // $this->renderV1(2);
         $this->stickModel->calcD(2);
         echo 'USER : 2';
         $this->renderV2();
     }
     public function render3(){
-
-       // $this->renderV1(3);
         $this->stickModel->calcD(3);
         echo 'USER : 3';
         $this->renderV2();
     }
     public function startGame(){
-
         if(isset($_SESSION['sticks'])!=true){
             $this->stickModel->setArray();
         }
-
     }
 
     public function restartGame(){
         if((isset($_GET[self::$reStart]))===true){
-            // $this->stickModel->setArray();
             return true;
         }
     }
@@ -227,17 +212,6 @@ class SticksView
 
         echo $this->bodyEnd();
         echo $this->htmlEnd();
-
-
-
-    }
-
-    public function renderV333($draw){
-
-        //echo '<br>';
-        $this->stickModel->calcD($draw);
-        $this->renderV1();
-
     }
 
     public function arraySizeCheck(){
@@ -345,6 +319,7 @@ class SticksView
             return true;
         }
     }
+
     public function getStartURL()
     {
         if((isset($_GET[self::$startURL]))===true){

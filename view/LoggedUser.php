@@ -12,9 +12,6 @@ class LoggedUser{
 
     private static $member = "member";
     private static $logout = "logout";
-    private static $privateUpload = "privateUp";
-    private static $draw1 = "draw=1";
-    private $stickView;
     public $stickModel;
 
     /**
@@ -22,40 +19,7 @@ class LoggedUser{
      */
     public function __construct(){
         $this->stickModel = new StickModel();
-
     }
-
-    /**
-     * Shows the member area page to the user
-     */
-    public function render(){
-
-       // echo $this->logoutBTN();
-        $user =$_SESSION['user'];
-        //echo '<H1>Welcome '.$user.' to the Stick game</H1>';
-        //echo $this->stickView->render();
-
-
-        
-      echo  '<!doctype html>
-        <html>
-          <head>
-             <title>Sticks</title>
-             <meta charset="UTF-8">
-             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-             <meta name="theme-color" content="red">
-          </head>
-          <nav>'. $this->logoutBTN().'</nav>
-          <body>
-                <H1>Welcome '.$user.' to the Stick game</H1>
-                '.$this->stickView->render().'				
-				
-                
-          </body>
-        </html>';
-      
-    }
-
 
     /**
      * Returns true/false if user want go to member area

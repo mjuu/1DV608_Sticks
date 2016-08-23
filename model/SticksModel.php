@@ -10,10 +10,6 @@ class StickModel{
 
     public $array1;
 
-    public function __construct(){
-    }
-
-
     public function setArray(){
         $this->setArr(22);
     }
@@ -36,10 +32,6 @@ class StickModel{
         if($arrSize>0){
             return  $this->array1= array_fill(1,$arrSize, 'A');
         }
-
-        //foreach ($this->array1 as $i =>$value){
-        //   echo $value ;
-        // }
     }
 
     /**
@@ -115,13 +107,11 @@ class StickModel{
             $this->calcD(1);
             echo 'CPU: 1';
             echo 'User win';
+            echo 'session: '.$getSessionValue;
 
         }elseif ($getSessionValue===0){
             echo 'User loose';
         }
-
-
-
     }
 
 }
