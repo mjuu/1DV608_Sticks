@@ -79,6 +79,9 @@ class SticksView{
         if($this->stickModel->sticksChecks(1)==true){
             $this->stickModel->calcD(1);
         }
+        if($this->sticksLeft == 0){
+            $this->stickModel->setCPUWin();
+        }
         $this->renderV2();
     }
     public function render2(){
@@ -86,11 +89,17 @@ class SticksView{
             $this->stickModel->calcD(2);
         }
 
+        if($this->sticksLeft == 0){
+            $this->stickModel->setCPUWin();
+        }
         $this->renderV2();
     }
     public function render3(){
         if($this->stickModel->sticksChecks(3)==true){
             $this->stickModel->calcD(3);
+        }
+        if($this->sticksLeft == 0){
+            $this->stickModel->setCPUWin();
         }
         $this->renderV2();
     }
@@ -125,12 +134,12 @@ class SticksView{
         }
     }
 
-    public function gameFinished(){
-        return $this->finnished;
-    }
 
     public function cpuDraw(){
         echo $this->stickModel->cpu();
+        if($this->sticksLeft == 0){
+            $this->stickModel->setUSERWin();
+        }
         echo '<br>'.$this->stickModel->getArrSize();
 
         $this->renderV1();
@@ -165,22 +174,19 @@ class SticksView{
             echo $this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($this->stickModel->getArr()));//
         }
 
-       if($this->finnished !=true){
+        if($this->finnished !=true){
            echo $this->drawStick();
-       }
+        }
         echo $this->showRestartButton();
         echo $this->bodyEnd();
         echo $this->htmlEnd();
         echo $this->stickModel->getWinner();
-       // echo $this->sticksDrawed();
     }
 
 
     public function renderV2(){
         //echo 'V2';
-       // echo '<br>';
         echo $this->stickModel->cpu();
-
         echo $this->htmlStart();
         echo $this->headStart();
         echo $this->nav();
@@ -300,11 +306,6 @@ class SticksView{
 		</ol>';
     }
 
-    public function showSticks(){
-        return '<p>'.$this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($this->stickModel->getArr())).'</p>';
-    }
-
-
     public function showStartButton(){
         return "<a href='?" . self::$startG . "'> Play!</a>";
     }
@@ -350,14 +351,6 @@ class SticksView{
             return true;
         }
     }
-
-    public function getStartURL()
-    {
-        if((isset($_GET[self::$startURL]))===true){
-            return true;
-        }
-    }
-
 
     
 }

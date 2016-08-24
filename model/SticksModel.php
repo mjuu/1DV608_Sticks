@@ -38,6 +38,15 @@ class StickModel{
         return $this->cpuWin;
     }
 
+    public function setUSERWin(){
+        $this->userWin = true;
+        $this->cpuWin = false;
+    }
+    public function setCPUWin(){
+        $this->userWin = false;
+        $this->cpuWin = true;
+    }
+
     public function getArr(){
         return $this->array1;
     }
@@ -101,12 +110,18 @@ class StickModel{
 
     public function sticksChecks($stick){
         $getSessionValue = $_SESSION['sticks'];
-        if($getSessionValue===2 &&$stick>=3){
+        if($getSessionValue===3 &&$stick=3){
+            return true;
+        }elseif($getSessionValue===2 &&$stick=2) {
+            return true;
+        }elseif($getSessionValue===2 &&$stick>=3){
             echo 'test >2';
             return false;
-        }elseif($getSessionValue===1&&$stick>=2){
-            echo 'test >1';
+        }if($getSessionValue===1 &&$stick>=2) {
             return false;
+        }elseif($getSessionValue===1&&$stick=1){
+            echo 'test >1';
+            return true;
         }elseif($getSessionValue===0 &&$stick>=1){
             echo 'test 0';
             return false;
@@ -178,6 +193,7 @@ class StickModel{
 
         }elseif ($getSessionValue===0){
           //  echo 'User loose';
+            
         }
     }
 
