@@ -38,8 +38,8 @@ class LoginDAL{
      */
     public function doLogin($username, $pass){
 
-       var_dump($username);
-       var_dump($pass);
+       //var_dump($username);
+      // var_dump($pass);
         $sql = "SELECT username FROM ".DB_LOGIN_TABLE." WHERE username = :usernameInput";
         $query = $this->pdo->prepare($sql);
         $query->bindParam(':usernameInput',$username);

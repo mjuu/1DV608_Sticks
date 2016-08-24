@@ -6,7 +6,8 @@
  * Time: 13:50
  */
 namespace model;
-class StickModel{
+class StickModel
+{
 
     public $array1;
     public $cpu;
@@ -14,65 +15,81 @@ class StickModel{
     public $cpuWin;
     public $gameEnded;
 
-    public function setArray(){
-        $this->gameEnded=false;
-        $this->userWin =false;
-        $this->cpuWin=false;
+    public function setArray()
+    {
+        $this->gameEnded = false;
+        $this->userWin = false;
+        $this->cpuWin = false;
         $this->setArr(22);
     }
 
-    public function setArrAfterDraw($value){
+    public function setArrAfterDraw($value)
+    {
 
         $this->setArr($value);
     }
 
-    public function getCpu(){
+    public function getCpu()
+    {
         return $this->cpu;
     }
 
-    public function getUserWin(){
+    public function getUserWin()
+    {
         return $this->userWin;
     }
-    public function getCPUWin(){
+
+    public function getCPUWin()
+    {
         return $this->cpuWin;
     }
 
-    public function setUSERWin(){
+    public function setUSERWin()
+    {
         $this->userWin = true;
         $this->cpuWin = false;
     }
-    public function setCPUWin(){
+
+    public function setCPUWin()
+    {
         $this->userWin = false;
         $this->cpuWin = true;
     }
 
-    public function getArr(){
+    public function getArr()
+    {
         return $this->array1;
     }
-    public function getGameEnded(){
+
+    public function getGameEnded()
+    {
         return $this->gameEnded;
     }
-    public function getWinner(){
-        if($this->userWin===true){
-            $this->getGameEnded= true;
-            return '<h1>USER WIN!</h1>';
-        }elseif ($this->cpuWin===true){
-            $this->getGameEnded= true;
+
+    public function getWinner()
+    {
+        if ($this->userWin === true) {
+            $this->getGameEnded = true;
+            return '<br><h1>USER WIN!</h1>';
+        } elseif ($this->cpuWin === true) {
+            $this->getGameEnded = true;
             return '<h1>CPU WIN!</h1>';
-        }else{
-            $this->gameEnded=false;
+        } else {
+            $this->gameEnded = false;
             return '';
         }
     }
+
     /**
      * Return an array
      * @param $arrSize user choose size
      * @return array
      */
-    public function setArr($arrSize){
-        $_SESSION['sticks']=$arrSize;
-        if($arrSize>0){
-            return  $this->array1= array_fill(1,$arrSize, 'A');
+    public function setArr($arrSize)
+    {
+        $_SESSION['sticks'] = $arrSize;
+        if ($arrSize > 0) {
+            return $this->array1 = array_fill(1, $arrSize, 'I ');
         }
     }
 
@@ -82,89 +99,99 @@ class StickModel{
      * @param $value substraction value
      * @return array
      */
-    public  function calcDraws($value){
-        return $this->array1=array_splice($this->array1,$value);
+    public function calcDraws($value)
+    {
+        return $this->array1 = array_splice($this->array1, $value);
     }
 
-    public function printArr($arr){
-        if(empty($arr)!==true)
-        return implode('',$arr);
-   }
+    public function printArr($arr)
+    {
+        if (empty($arr) !== true)
+            return implode('', $arr);
+    }
 
 
     /**
      * @param $arr
      */
-    public function arraySize($arr){
-       echo count($arr);
+    public function arraySize($arr)
+    {
+        echo count($arr);
     }
 
-    public function getArrSize(){
+    public function getArrSize()
+    {
         return count($this->array1);
     }
 
 
-    public function sticksChecks($stick){
+    public function sticksChecks($stick)
+    {
         $getSessionValue = $_SESSION['sticks'];
-        if($getSessionValue===3 &&$stick=3){
+        if ($getSessionValue === 3 && $stick = 3) {
             return true;
-        }elseif($getSessionValue===2 &&$stick=2) {
+        } elseif ($getSessionValue === 2 && $stick = 2) {
             return true;
-        }elseif($getSessionValue===2 &&$stick>=3){
+        } elseif ($getSessionValue === 2 && $stick >= 3) {
             echo 'test >2';
             return false;
-        }if($getSessionValue===1 &&$stick>=2) {
+        }
+        if ($getSessionValue === 1 && $stick >= 2) {
             return false;
-        }elseif($getSessionValue===1&&$stick=1){
+        } elseif ($getSessionValue === 1 && $stick = 1) {
             echo 'test >1';
             return true;
-        }elseif($getSessionValue===0 &&$stick>=1){
+        } elseif ($getSessionValue === 0 && $stick >= 1) {
             echo 'test 0';
             return false;
+        } else {
+            return true;
         }
-        else{return true;}
     }
 
-    public function calcD($value){
-        if(isset($_SESSION['sticks'])==true){
+    public function calcD($value)
+    {
+        if (isset($_SESSION['sticks']) == true) {
             $getSessionValue = $_SESSION['sticks'];
-                $val = $getSessionValue-$value;
-                $_SESSION['sticks']=$val;
-                $this->setArr($val);
-                return $this->array1;
+            $val = $getSessionValue - $value;
+            $_SESSION['sticks'] = $val;
+            $this->setArr($val);
+            return $this->array1;
         }
     }
 
-    public function cpu(){
-        $variable = rand(1,3);
+    public function cpu()
+    {
+        $variable = rand(1, 3);
         $getSessionValue = $_SESSION['sticks'];
 
-        if($getSessionValue>=6){
+        if ($getSessionValue >= 6) {
             $this->calcD($variable);
             $this->cpu = $variable;
             $_SESSION['cpu'] = $this->cpu;
-        }elseif($getSessionValue===5){
-                $this->calcD(1);
-            $_SESSION['cpu'] = '1';
-        }elseif($getSessionValue===4){
+        } elseif ($getSessionValue === 5) {
             $this->calcD(1);
             $_SESSION['cpu'] = '1';
-        }elseif($getSessionValue===3){
+        } elseif ($getSessionValue === 4) {
+            $this->calcD(1);
+            $_SESSION['cpu'] = '1';
+        } elseif ($getSessionValue === 3) {
             $this->calcD(2);
             $_SESSION['cpu'] = '2';
             $this->userWin = false;
             $this->cpuWin = true;
-        }elseif ($getSessionValue===2){
+        } elseif ($getSessionValue === 2) {
             $this->calcD(1);
             $_SESSION['cpu'] = '1';
             $this->userWin = false;
             $this->cpuWin = true;
-        }elseif ($getSessionValue===1){
+        } elseif ($getSessionValue === 1) {
             $this->calcD(1);
             $_SESSION['cpu'] = '1';
             $this->userWin = true;
             $this->cpuWin = false;
-        }elseif ($getSessionValue===0){}
+        } elseif ($getSessionValue === 0) {
+        }
     }
 
 }

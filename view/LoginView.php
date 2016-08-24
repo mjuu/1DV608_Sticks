@@ -145,20 +145,25 @@ class LoginView{
              <meta charset="UTF-8">
              <meta name="viewport" content="width=device-width, initial-scale=1.0">
              <meta name="theme-color" content="yellow">
+             <link rel="stylesheet" type="text/css" href="../style.css">
           </head>
-          <nav>'.$this->showBackButton().''.$this->showRegisterButton().'</nav>
-          <body>	
+          <body>
+          <div id="wrapper">
+          <nav id="login">'.$this->showRegisterButton().'</nav>
+          <main>
 				<form action ="" method="post" >
 				<fieldset>
-					<legend>Login - enter Username and password</legend>
+					<legend>Login </legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
-					<label for="' . self::$username . '">Username :</label>
+					<label for="' . self::$username . '">Username <p id="hide">:</p></label>
 					<input type="text" id="' . self::$username . '" name="' . self::$username . '" value="" />
-					<label for="' . self::$password . '">Password :</label>
+					<label for="' . self::$password . '">Password <p id="hide">:</p></label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
 					<input type="submit" name="' . self::$login . '" value="login" />
 				</fieldset>
 			</form>
+			</main>
+			</div>
           </body>
         </html>		
 		';
@@ -177,24 +182,30 @@ class LoginView{
              <meta charset="UTF-8">
              <meta name="viewport" content="width=device-width, initial-scale=1.0">
              <meta name="theme-color" content="blue">
+             <link rel="stylesheet" type="text/css" href="../style.css">
           </head>
-          <nav>'.$this->showBackButton().''.$this->showRegisterButton().'</nav>
-          <body>	
+          
+          <body>
+          <div id="wrapper">
+          <nav id="login">' .$this->showBackButton().'</nav>
+          <main>
 				<form action ="" method="post" >
 				<fieldset>
 					<legend>Register a new account </legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
-					<label for="' . self::$usernameReg . '">Username :</label>
+					<label for="' . self::$usernameReg . '">Username <p id="hide">:</p></label>
 					<input type="text" id="' . self::$usernameReg . '" name="' . self::$usernameReg . '" value="" />
 					<br>
-					<label for="' . self::$password . '">Password :</label>
+					<label for="' . self::$password . '">Password <p id="hide">:</p></label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
                     <br>
-					<label for="' . self::$repassword . '">Retype Password :</label>
+					<label for="' . self::$repassword . '">Retype Password <p id="hide">:</p></label>
 					<input type="password" id="' . self::$repassword . '" name="' . self::$repassword . '" />
 					<input type="submit" name="' . self::$registerButton . '" value="register" />
 				</fieldset>
 			</form>
+			</main>
+			</div>
           </body>
         </html>	
 		';
@@ -296,7 +307,7 @@ class LoginView{
      * @return string
      */
     public function showBackButton(){
-        return "<a href='?" . self::$backButton. "'> Back to Start</a>";
+        return "<a href='?" . self::$backButton. "'> Login</a>";
     }
 
     /**

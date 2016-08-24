@@ -155,16 +155,19 @@ class SticksView{
             $userDraw='3';
         }
 
-        return '<p>USER Draw: '.$userDraw.'
-                <br>CPU Draw: '.$_SESSION['cpu'].'</p>';
+        return '
+        <div class="draws">USER Draw: '.$userDraw.'
+        <br>CPU Draw: '.$_SESSION['cpu'].'</div>';
     }
 
     public function renderV1(){
-        //echo 'V1';
+        echo 'V1';
         echo $this->htmlStart();
         echo $this->headStart();
-        echo $this->nav();
         echo $this->bodyStart();
+        echo $this->wrapperStart();
+        echo $this->mainStart();
+        echo $this->nav();
         echo $this->userWelcome();
 
         if($this->arraySizeCheck()===0){
@@ -177,7 +180,11 @@ class SticksView{
         if($this->finnished !=true){
            echo $this->drawStick();
         }
-        echo $this->showRestartButton();
+        echo $this->mainEnd();
+        echo $this->footerStart();
+        echo $this->showRestartButton1();
+        echo $this->footerEnd();
+        echo $this->wrapperEnd();
         echo $this->bodyEnd();
         echo $this->htmlEnd();
         echo $this->stickModel->getWinner();
@@ -185,12 +192,14 @@ class SticksView{
 
 
     public function renderV2(){
-        //echo 'V2';
+        echo 'V2';
         echo $this->stickModel->cpu();
         echo $this->htmlStart();
         echo $this->headStart();
-        echo $this->nav();
         echo $this->bodyStart();
+        echo $this->wrapperStart();
+        echo $this->mainStart();
+        echo $this->nav();
         echo $this->userWelcome();
 
         if($this->arraySizeCheck()===0){
@@ -204,7 +213,12 @@ class SticksView{
             echo $this->sticksDrawed();
         }
         echo $this->stickModel->getWinner();
-        echo $this->showRestartButton();
+
+        echo $this->mainEnd();
+        echo $this->footerStart();
+        echo $this->showRestartButton1();
+        echo $this->footerEnd();
+        echo $this->wrapperEnd();
         echo $this->bodyEnd();
         echo $this->htmlEnd();
 
@@ -218,8 +232,10 @@ class SticksView{
         }
         echo $this->htmlStart();
         echo $this->headStart();
-        echo $this->nav();
         echo $this->bodyStart();
+        echo $this->wrapperStart();
+        echo $this->mainStart();
+        echo $this->nav();
         echo $this->userWelcome();
         if($this->sticksLeft===0){
             echo $this->printSticks(0,0);
@@ -238,8 +254,12 @@ class SticksView{
         }else{
             echo $this->showRestartButton();
         }
-        echo $this->sticksDrawed();
+        //echo $this->sticksDrawed();
         echo $this->stickModel->getWinner();
+        echo $this->mainEnd();
+        echo $this->footerStart();
+        echo $this->footerEnd();
+        echo $this->wrapperEnd();
         echo $this->bodyEnd();
         echo $this->htmlEnd();
 
@@ -254,7 +274,7 @@ class SticksView{
     public function htmlStart(){
         return '
 <!doctype html>
-    <html>';
+<html>';
     }
 
     public function htmlEnd(){
@@ -269,21 +289,47 @@ class SticksView{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="red">
+    <link rel="stylesheet" type="text/css" href="../style.css">
 </head>';
     }
 
     public function nav(){
        return '
-    <nav>'. $this->loggedU->logoutBTN().'</nav>';
+     <nav>'. $this->loggedU->logoutBTN().'</nav>';
     }
 
     public function bodyStart(){
         return '
     <body>';
     }
+    public function wrapperStart(){
+        return '
+        <div id="wrapper">';
+    }
+    public function wrapperEnd(){
+        return '
+    </div>';
+    }
+    public function mainStart(){
+        return '
+    <main>';
+    }
+    public function mainEnd(){
+        return '
+    </main>';
+    }
     public function bodyEnd(){
         return '
     </body>';
+    }
+
+    public function footerStart(){
+        return '
+    <footer>';
+    }
+    public function footerEnd(){
+        return '
+    </footer>';
     }
     public function userWelcome(){
         return '
@@ -291,8 +337,8 @@ class SticksView{
     }
     public function printSticks($sticksValue,$printSticks){
         return ' 
-     <p><h2>There is '.$sticksValue.' sticks left</h2></p>
-     <p style=\'font-family: "Courier New", Courier, monospace\'>'.$printSticks.'</p>';
+     <p><h3>There is <p id="stickValue">'.$sticksValue.'</p>  sticks left</h3></p>
+     <p id="sticks">'.$printSticks.'</p>';
     }
 
     public function drawStick(){
@@ -300,7 +346,7 @@ class SticksView{
      <p><h2>Select number of sticks</h2></p>
 	 <p>The player who draws the last stick looses</p>
 		 <ol>
-			 <li>'.$this->showDraw1(). ' 1 stick</a></li>
+			 <li>'.$this->showDraw1(). ' 1 sticks</a></li>
 			 <li>'.$this->showDraw2(). ' 2 sticks</a></li>
 			 <li>'.$this->showDraw3(). ' 3 sticks</a></li>
 		</ol>';
@@ -309,22 +355,25 @@ class SticksView{
     public function showStartButton(){
         return "<a href='?" . self::$startG . "'> Play!</a>";
     }
+    public function showRestartButton1(){
+        return "<a href='?" . self::$reStart . "' id='restart1'> Restart!</a>";
+    }
     public function showRestartButton(){
-        return "<a href='?" . self::$reStart . "'> Restart!</a>";
+        return "<a href='?" . self::$reStart . "' id='restart'> Restart!</a>";
     }
     public function showDraw1()
     {
-        return "<a href='?" . self::$draw1 . "'> Draw</a>";
+        return "<a href='?" . self::$draw1 . "'> Draw";
     }
 
     public function showDraw2()
     {
-        return "<a href='?" . self::$draw2 . "'> Draw</a>";
+        return "<a href='?" . self::$draw2 . "'> Draw";
     }
 
     public function showDraw3()
     {
-        return "<a href='?" . self::$draw3 . "'> Draw</a>";
+        return "<a href='?" . self::$draw3 . "'> Draw";
     }
 
     public function draw1Clicked(){
