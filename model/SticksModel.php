@@ -9,7 +9,6 @@ namespace model;
 class StickModel{
 
     public $array1;
-    public $temp='';
     public $cpu;
     public $userWin;
     public $cpuWin;
@@ -104,9 +103,6 @@ class StickModel{
         return count($this->array1);
     }
 
-    public function drawFull(){
-        return $this->printArr($this->array1);
-    }
 
     public function sticksChecks($stick){
         $getSessionValue = $_SESSION['sticks'];
@@ -126,10 +122,7 @@ class StickModel{
             echo 'test 0';
             return false;
         }
-        else{
-            return true;
-        }
-
+        else{return true;}
     }
 
     public function calcD($value){
@@ -148,53 +141,30 @@ class StickModel{
 
         if($getSessionValue>=6){
             $this->calcD($variable);
-       //     echo 'CPU: '.$variable;
             $this->cpu = $variable;
             $_SESSION['cpu'] = $this->cpu;
-      //      var_dump($_SESSION['cpu']);
         }elseif($getSessionValue===5){
                 $this->calcD(1);
-      //      echo 'CPU: 1';
             $_SESSION['cpu'] = '1';
-     //       var_dump($_SESSION['cpu']);
         }elseif($getSessionValue===4){
             $this->calcD(1);
-        //    echo 'CPU: 1';
             $_SESSION['cpu'] = '1';
-        //    var_dump($_SESSION['cpu']);
         }elseif($getSessionValue===3){
             $this->calcD(2);
-        //    echo 'CPU: 2';
             $_SESSION['cpu'] = '2';
-        //    var_dump($_SESSION['cpu']);
-          //  echo 'User lose';
             $this->userWin = false;
             $this->cpuWin = true;
         }elseif ($getSessionValue===2){
             $this->calcD(1);
-        //    echo 'CPU: 2';
             $_SESSION['cpu'] = '1';
-        //    var_dump($_SESSION['cpu']);
-            //echo 'User lose';
             $this->userWin = false;
             $this->cpuWin = true;
         }elseif ($getSessionValue===1){
-
             $this->calcD(1);
-           // echo 'session: '.$getSessionValue;
             $_SESSION['cpu'] = '1';
-       //     var_dump($_SESSION['cpu']);
-          //  echo 'CPU: 1';
-         //   echo 'User win';
             $this->userWin = true;
             $this->cpuWin = false;
-          //  echo 'session: '.$getSessionValue;
-        //    echo 'arrsize: '.$this->getArrSize();
-
-        }elseif ($getSessionValue===0){
-          //  echo 'User loose';
-            
-        }
+        }elseif ($getSessionValue===0){}
     }
 
 }

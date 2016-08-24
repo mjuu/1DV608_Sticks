@@ -53,15 +53,12 @@ class MasterController
         elseif($this->loginView->loggedIN() == 1){
             //If "member" is typed in url, send to member page
             if ($this->loggedU->memberPage() == true){
-              //  $this->loggedU->render();
-                //$this->stickV->render();
                 $this->stickV->renderFallback();
 
             }elseif($this->stickV->draw1Clicked()||$this->stickV->draw2Clicked()||$this->stickV->draw3Clicked()===true) {
                 $this->stickCon->doControl();
             }elseif($this->stickV->restartClicked()==true){
                 $this->stickV->renderV1();
-                //$this->stickCon->refreshPage();
             }else{
                 //send user back to member page if url is altered
                 $this->stickV->renderFallback();
@@ -70,8 +67,6 @@ class MasterController
                 $this->loggedU->doLogout();
             }
         }
-            //$this->stickV->renderV1();
-
         //if use is not logged in, show login page
         else{
             $this->loginCont->control();
