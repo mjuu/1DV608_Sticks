@@ -140,7 +140,7 @@ class StickModel{
         }elseif($getSessionValue===5){
                 $this->calcD(1);
       //      echo 'CPU: 1';
-            $_SESSION['cpu'] = '4';
+            $_SESSION['cpu'] = '1';
      //       var_dump($_SESSION['cpu']);
         }elseif($getSessionValue===4){
             $this->calcD(1);

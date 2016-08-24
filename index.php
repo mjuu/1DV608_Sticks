@@ -17,7 +17,7 @@ require_once ("model/DrawModel.php");
 require_once("view/LoginView.php");
 require_once("view/LoggedUser.php");
 require_once ("conf/conf.php");
-//require_once("conf/conf.php");
+//require_once("/var/conf/conf.php");
 require_once("view/SticksView.php");
 require_once("Settings.php");
 
