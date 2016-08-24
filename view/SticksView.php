@@ -76,18 +76,22 @@ class SticksView{
         }
     }
     public function render1(){
-        $this->stickModel->calcD(1);
-        echo 'USER : 1';
+        if($this->stickModel->sticksChecks(1)==true){
+            $this->stickModel->calcD(1);
+        }
         $this->renderV2();
     }
     public function render2(){
-        $this->stickModel->calcD(2);
-        echo 'USER : 2';
+        if($this->stickModel->sticksChecks(2)==true){
+            $this->stickModel->calcD(2);
+        }
+
         $this->renderV2();
     }
     public function render3(){
-        $this->stickModel->calcD(3);
-        echo 'USER : 3';
+        if($this->stickModel->sticksChecks(3)==true){
+            $this->stickModel->calcD(3);
+        }
         $this->renderV2();
     }
     public function startGame(){
@@ -128,10 +132,26 @@ class SticksView{
     public function cpuDraw(){
         echo $this->stickModel->cpu();
         echo '<br>'.$this->stickModel->getArrSize();
+
         $this->renderV1();
     }
 
+    public function sticksDrawed(){
+        $userDraw='';
+        if($this->draw1Clicked()){
+            $userDraw='1';
+        }elseif ($this->draw2Clicked()){
+            $userDraw='2';
+        }elseif ($this->draw3Clicked()){
+            $userDraw='3';
+        }
+
+        return '<p>USER Draw: '.$userDraw.'
+                <br>CPU Draw: '.$_SESSION['cpu'].'</p>';
+    }
+
     public function renderV1(){
+        //echo 'V1';
         echo $this->htmlStart();
         echo $this->headStart();
         echo $this->nav();
@@ -151,11 +171,14 @@ class SticksView{
         echo $this->showRestartButton();
         echo $this->bodyEnd();
         echo $this->htmlEnd();
+        echo $this->stickModel->getWinner();
+       // echo $this->sticksDrawed();
     }
 
 
     public function renderV2(){
-        echo '<br>';
+        //echo 'V2';
+       // echo '<br>';
         echo $this->stickModel->cpu();
 
         echo $this->htmlStart();
@@ -166,22 +189,24 @@ class SticksView{
 
         if($this->arraySizeCheck()===0){
             echo $this->printSticks('0','Restart if you want to play again');
-            $this->finnished = true;
-        }else{
+        }elseif($this->stickModel->getUserWin()==NULL &&$this->stickModel->getCPUWin()==NULL){
            echo $this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($this->stickModel->getArr()));
         }
 
-        if($this->finnished !=true){
+        if($this->stickModel->getUserWin()==NULL &&$this->stickModel->getCPUWin()==NULL){
             echo $this->drawStick();
+            echo $this->sticksDrawed();
         }
+        echo $this->stickModel->getWinner();
         echo $this->showRestartButton();
         echo $this->bodyEnd();
         echo $this->htmlEnd();
-    }
 
+    }
 
     public function renderFallback(){
 
+        //echo 'fallback';
         if($this->sticksLeft>0){
             $this->backupArr = array_fill(1,$this->sticksLeft, 'A');
         }
@@ -207,8 +232,11 @@ class SticksView{
         }else{
             echo $this->showRestartButton();
         }
+        echo $this->sticksDrawed();
+        echo $this->stickModel->getWinner();
         echo $this->bodyEnd();
         echo $this->htmlEnd();
+
     }
 
     public function arraySizeCheck(){
@@ -275,6 +303,8 @@ class SticksView{
     public function showSticks(){
         return '<p>'.$this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($this->stickModel->getArr())).'</p>';
     }
+
+
     public function showStartButton(){
         return "<a href='?" . self::$startG . "'> Play!</a>";
     }
