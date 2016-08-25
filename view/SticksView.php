@@ -175,7 +175,7 @@ class SticksView{
     }
 
     public function renderV1(){
-        //echo 'V1';
+      //  echo 'V1';
 
         echo $this->htmlStart();
         echo $this->headStart();
@@ -217,9 +217,6 @@ class SticksView{
         echo $this->stickModel->getWinner();
         echo $this->asideEnd();
 
-
-        echo $this->asideEnd();
-
         //shows info how to play
         echo $this->infoStart();
         echo $this->drawInfo();
@@ -242,7 +239,7 @@ class SticksView{
 
 
     public function renderV2(){
-      //  echo 'V2';
+        echo 'V2';
         if($_SESSION['sticks']==0){
         }else{
             echo $this->stickModel->cpu();
@@ -510,7 +507,9 @@ class SticksView{
     public function drawInfo(){
         return '
      <p><h2>Select number of sticks</h2></p>
-	 <p>The player who draws the last stick looses</p>';
+	 <p>The player who draws the last stick looses</p>
+	 <p id="score">Score</p>
+	 '.$this->stickModel->getScoreUser().'<br>'.$this->stickModel->getScoreCPU();
     }
 
     public function showStartButton(){
