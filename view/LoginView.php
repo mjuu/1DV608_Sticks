@@ -150,14 +150,14 @@ class LoginView{
           <body>
           <div id="wrapper">
           <nav id="login">'.$this->showRegisterButton().'</nav>
-          <main>
+          <main class="loginBG">
 				<form action ="" method="post" >
 				<fieldset>
-					<legend>Login </legend>
+					<legend id="legend1">Login </legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
-					<label for="' . self::$username . '">Username <p id="hide">:</p></label>
+					<label for="' . self::$username . '">Username </label>
 					<input type="text" id="' . self::$username . '" name="' . self::$username . '" value="" />
-					<label for="' . self::$password . '">Password <p id="hide">:</p></label>
+					<label for="' . self::$password . '">Password </label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
 					<input type="submit" name="' . self::$login . '" value="login" />
 				</fieldset>
@@ -188,10 +188,10 @@ class LoginView{
           <body>
           <div id="wrapper">
           <nav id="login">' .$this->showBackButton().'</nav>
-          <main>
+          <main class="loginBG">
 				<form action ="" method="post" >
 				<fieldset>
-					<legend>Register a new account </legend>
+					<legend id="legend2">Register a new account </legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
 					<label for="' . self::$usernameReg . '">Username <p id="hide">:</p></label>
 					<input type="text" id="' . self::$usernameReg . '" name="' . self::$usernameReg . '" value="" />

@@ -14,6 +14,8 @@ class StickModel
     public $userWin;
     public $cpuWin;
     public $gameEnded;
+    public $lastDraw;
+    public $userDraw;
 
     public function setArray()
     {
@@ -149,13 +151,28 @@ class StickModel
         }
     }
 
-    public function calcD($value)
-    {
+    public function calcD($value,$user){
+
+        $us = $user;
         if (isset($_SESSION['sticks']) == true) {
             $getSessionValue = $_SESSION['sticks'];
             $val = $getSessionValue - $value;
             $_SESSION['sticks'] = $val;
             $this->setArr($val);
+            if($val==0){
+                if($us==1){
+
+                    echo 'test1';
+                      $this->userWin = false;
+                       $this->cpuWin = true;
+                }elseif($us==2){
+                      $this->userWin = true;
+                      $this->cpuWin = false;
+                    echo 'test2';
+                }
+            }else{
+
+            }
             return $this->array1;
         }
     }
@@ -165,33 +182,32 @@ class StickModel
         $variable = rand(1, 3);
         $getSessionValue = $_SESSION['sticks'];
 
+        $this->lastDraw=2;
         if ($getSessionValue >= 6) {
-            $this->calcD($variable);
+            $this->calcD($variable,2);
             $this->cpu = $variable;
             $_SESSION['cpu'] = $this->cpu;
         } elseif ($getSessionValue === 5) {
-            $this->calcD(1);
+            $this->calcD(1,2);
             $_SESSION['cpu'] = '1';
         } elseif ($getSessionValue === 4) {
-            $this->calcD(1);
+            $this->calcD(1,2);
             $_SESSION['cpu'] = '1';
         } elseif ($getSessionValue === 3) {
-            $this->calcD(2);
+            $this->calcD(2,2);
             $_SESSION['cpu'] = '2';
-            $this->userWin = false;
-            $this->cpuWin = true;
         } elseif ($getSessionValue === 2) {
-            $this->calcD(1);
+            $this->calcD(1,2);
             $_SESSION['cpu'] = '1';
-            $this->userWin = false;
-            $this->cpuWin = true;
         } elseif ($getSessionValue === 1) {
-            $this->calcD(1);
+            $this->calcD(1,2);
             $_SESSION['cpu'] = '1';
-            $this->userWin = true;
-            $this->cpuWin = false;
         } elseif ($getSessionValue === 0) {
+            }
         }
+
+    public function setUserDraw(){
+        $this->lastDraw=1;
     }
 
 }
