@@ -181,18 +181,26 @@ class StickModel
     {
         $variable = rand(1, 3);
         $getSessionValue = $_SESSION['sticks'];
-
         $this->lastDraw=2;
-        if ($getSessionValue >= 6) {
+        if ($getSessionValue >= 9) {
             $this->calcD($variable,2);
             $this->cpu = $variable;
             $_SESSION['cpu'] = $this->cpu;
+        }elseif ($getSessionValue === 8){
+            $this->calcD(1,2);
+            $_SESSION['cpu'] = '1';
+        } elseif ($getSessionValue === 7){
+            $this->calcD(3,2);
+            $_SESSION['cpu'] = '3';
+        } elseif ($getSessionValue === 6){
+            $this->calcD(2,2);
+            $_SESSION['cpu'] = '2';
         } elseif ($getSessionValue === 5) {
             $this->calcD(1,2);
             $_SESSION['cpu'] = '1';
         } elseif ($getSessionValue === 4) {
-            $this->calcD(1,2);
-            $_SESSION['cpu'] = '1';
+            $this->calcD(3,2);
+            $_SESSION['cpu'] = '3';
         } elseif ($getSessionValue === 3) {
             $this->calcD(2,2);
             $_SESSION['cpu'] = '2';
