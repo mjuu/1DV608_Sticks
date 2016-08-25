@@ -161,63 +161,129 @@ class SticksView{
     }
 
     public function renderV1(){
-        echo 'V1';
+        //echo 'V1';
         echo $this->htmlStart();
         echo $this->headStart();
         echo $this->bodyStart();
         echo $this->wrapperStart();
-        echo $this->mainStart();
+        echo $this->contentStart();
+
+        echo $this->headerStart();
         echo $this->nav();
         echo $this->userWelcome();
 
+        echo $this->headerEnd();
+
+
+        echo $this->mainStart();
         if($this->arraySizeCheck()===0){
             echo $this->printSticks(0,0);
             $this->finnished = true;
         }else{
-            echo $this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($this->stickModel->getArr()));//
+            echo $this->printSticksNR($this->stickModel->getArrSize());//
         }
 
-        if($this->finnished !=true){
-           echo $this->drawStick();
-        }
         echo $this->mainEnd();
+
+        //Shows sticks
+        echo $this->displayStart();
+        if($this->arraySizeCheck()===0){
+            // echo $this->printSticks('0','Restart if you want to play again');
+        }elseif($this->stickModel->getUserWin()==NULL &&$this->stickModel->getCPUWin()==NULL){
+            echo $this->printOnlySticks($this->stickModel->printArr($this->stickModel->getArr()));
+        }
+
+        //Shows how many sticks was drown and who wins
+        echo $this->UserCPUDrawsStart();
+
+        if($this->restartClicked()!=true && isset($_SESSION['cpu'])==true){
+            echo $this->sticksDrawed();
+        }
+        echo $this->stickModel->getWinner();
+        echo $this->asideEnd();
+
+
+        echo $this->asideEnd();
+
+        //shows info how to play
+        echo $this->infoStart();
+        echo $this->drawInfo();
+        echo $this->asideEnd();
+
+        echo $this->drawStickStart();
+        if($this->finnished !=true){
+            echo $this->drawStick();
+        }
+        echo $this->asideEnd();
+
         echo $this->footerStart();
         echo $this->showRestartButton1();
         echo $this->footerEnd();
         echo $this->wrapperEnd();
         echo $this->bodyEnd();
         echo $this->htmlEnd();
-        echo $this->stickModel->getWinner();
+
     }
 
 
     public function renderV2(){
-        echo 'V2';
+       // echo 'V2';
+
         echo $this->stickModel->cpu();
+
         echo $this->htmlStart();
         echo $this->headStart();
         echo $this->bodyStart();
         echo $this->wrapperStart();
-        echo $this->mainStart();
+        echo $this->contentStart();
+
+        echo $this->headerStart();
         echo $this->nav();
         echo $this->userWelcome();
 
+        echo $this->headerEnd();
+
+        //Shows how many sticks left
+        echo $this->mainStart();
         if($this->arraySizeCheck()===0){
             echo $this->printSticks('0','Restart if you want to play again');
         }elseif($this->stickModel->getUserWin()==NULL &&$this->stickModel->getCPUWin()==NULL){
-           echo $this->printSticks($this->stickModel->getArrSize(),$this->stickModel->printArr($this->stickModel->getArr()));
+            echo $this->printSticksNR($this->stickModel->getArrSize());
         }
+        echo $this->mainEnd();
+
+
+        //Shows sticks
+        echo $this->displayStart();
+        if($this->arraySizeCheck()===0){
+           // echo $this->printSticks('0','Restart if you want to play again');
+        }elseif($this->stickModel->getUserWin()==NULL &&$this->stickModel->getCPUWin()==NULL){
+            echo $this->printOnlySticks($this->stickModel->printArr($this->stickModel->getArr()));
+        }
+        echo $this->asideEnd();
+
+        //Shows how many sticks was drown and who wins
+        echo $this->UserCPUDrawsStart();
+        echo $this->sticksDrawed();
+        echo $this->stickModel->getWinner();
+        echo $this->asideEnd();
 
         if($this->stickModel->getUserWin()==NULL &&$this->stickModel->getCPUWin()==NULL){
+            echo $this->infoStart();
+            echo $this->drawInfo();
+            echo $this->asideEnd();
+            echo $this->drawStickStart();
             echo $this->drawStick();
-            echo $this->sticksDrawed();
-        }
-        echo $this->stickModel->getWinner();
+            echo $this->asideEnd();
+        }else{
 
-        echo $this->mainEnd();
+        }
+        //show footer with restart button
         echo $this->footerStart();
         echo $this->showRestartButton1();
         echo $this->footerEnd();
+
+        echo $this->contentEnd();
         echo $this->wrapperEnd();
         echo $this->bodyEnd();
         echo $this->htmlEnd();
@@ -226,39 +292,78 @@ class SticksView{
 
     public function renderFallback(){
 
-        //echo 'fallback';
+       // echo 'fallback';
         if($this->sticksLeft>0){
-            $this->backupArr = array_fill(1,$this->sticksLeft, 'A');
+            $this->backupArr = array_fill(1,$this->sticksLeft, 'I ');
         }
+        //echo $this->stickModel->cpu();
+
         echo $this->htmlStart();
         echo $this->headStart();
         echo $this->bodyStart();
         echo $this->wrapperStart();
-        echo $this->mainStart();
+        echo $this->contentStart();
+        echo $this->headerStart();
         echo $this->nav();
         echo $this->userWelcome();
+        echo $this->headerEnd();
+
+        //Shows how many sticks left
+        echo $this->mainStart();
         if($this->sticksLeft===0){
-            echo $this->printSticks(0,0);
+            echo $this->printSticksNR(0);
             $this->finnished = true;
+        }else{
+            echo $this->printSticksNR($this->sticksLeft);
         }
+        echo $this->mainEnd();
+        echo $this->displayStart();
         if(count($this->backupArr>0)){
-
-             echo $this->printSticks($this->sticksLeft,$this->stickModel->printArr($this->backupArr));
-
+            echo $this->printOnlySticks($this->stickModel->printArr($this->backupArr));
         }else{
             $this->printSticks($this->sticksLeft,'2');
         }
+        echo $this->asideEnd();
+        //Shows how many sticks was drown and who wins
+        echo $this->UserCPUDrawsStart();
+        echo $this->sticksDrawed();
+        echo $this->stickModel->getWinner();
+        echo $this->asideEnd();
 
-        if($this->finnished !=true){
+
+      /*  if($this->finnished !=true){
             echo $this->drawStick();
         }else{
             echo $this->showRestartButton();
         }
         //echo $this->sticksDrawed();
         echo $this->stickModel->getWinner();
-        echo $this->mainEnd();
+
+      */
+
+        if($this->finnished !=true){
+            //shows info how to play
+            echo $this->infoStart();
+            echo $this->drawInfo();
+            echo $this->asideEnd();
+            //Shows links to draw sticks
+            echo $this->drawStickStart();
+            if($this->stickModel->getUserWin()==NULL &&$this->stickModel->getCPUWin()==NULL){
+                echo $this->drawStick();
+            }
+            echo $this->asideEnd();
+
+        }else{
+            echo $this->showRestartButton();
+        }
+
+
+        //show footer with restart button
         echo $this->footerStart();
+        echo $this->showRestartButton1();
         echo $this->footerEnd();
+
+        echo $this->contentEnd();
         echo $this->wrapperEnd();
         echo $this->bodyEnd();
         echo $this->htmlEnd();
@@ -293,6 +398,37 @@ class SticksView{
 </head>';
     }
 
+    public function headerStart(){
+        return '
+     <header>';
+    }
+
+    public function headerEnd(){
+        return '
+    </header>';
+    }
+
+    public function displayStart(){
+        return '
+        <aside class="aside aside-1">';
+    }
+    public function UserCPUDrawsStart(){
+        return '
+        <aside class="aside aside-2">';
+    }
+    public function infoStart(){
+        return '
+        <aside class="aside aside-3">';
+    }
+    public function drawStickStart(){
+        return '
+        <aside class="aside aside-4">';
+    }
+
+    public function asideEnd(){
+        return '
+        </aside>';
+    }
     public function nav(){
        return '
      <nav>'. $this->loggedU->logoutBTN().'</nav>';
@@ -300,11 +436,11 @@ class SticksView{
 
     public function bodyStart(){
         return '
-    <body>';
+<body>';
     }
     public function wrapperStart(){
         return '
-        <div id="wrapper">';
+<div id="wrapper">';
     }
     public function wrapperEnd(){
         return '
@@ -317,6 +453,14 @@ class SticksView{
     public function mainEnd(){
         return '
     </main>';
+    }
+    public function contentStart(){
+        return '
+    <div class="content">';
+    }
+    public function contentEnd(){
+        return '
+    </div>';
     }
     public function bodyEnd(){
         return '
@@ -333,7 +477,7 @@ class SticksView{
     }
     public function userWelcome(){
         return '
-     <H1>Welcome '.$this->user.' to the Stick game</H1>';
+     <H1 class="flex-item">Welcome '.$this->user.' to the Stick game</H1>';
     }
     public function printSticks($sticksValue,$printSticks){
         return ' 
@@ -341,15 +485,28 @@ class SticksView{
      <p id="sticks">'.$printSticks.'</p>';
     }
 
+    public function printSticksNR($sticksValue){
+        return ' 
+     <p><h3>There is <p id="stickValue">'.$sticksValue.'</p>  sticks left</h3></p>';
+    }
+
+    public function printOnlySticks($printSticks){
+        return ' 
+     <p id="sticks">'.$printSticks.'</p>';
+    }
+
     public function drawStick(){
         return '
-     <p><h2>Select number of sticks</h2></p>
-	 <p>The player who draws the last stick looses</p>
 		 <ol>
 			 <li>'.$this->showDraw1(). ' 1 sticks</a></li>
 			 <li>'.$this->showDraw2(). ' 2 sticks</a></li>
 			 <li>'.$this->showDraw3(). ' 3 sticks</a></li>
 		</ol>';
+    }
+    public function drawInfo(){
+        return '
+     <p><h2>Select number of sticks</h2></p>
+	 <p>The player who draws the last stick looses</p>';
     }
 
     public function showStartButton(){
