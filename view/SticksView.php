@@ -239,7 +239,7 @@ class SticksView{
 
 
     public function renderV2(){
-        echo 'V2';
+        //echo 'V2';
         if($_SESSION['sticks']==0){
         }else{
             echo $this->stickModel->cpu();
@@ -505,6 +505,10 @@ class SticksView{
 		</ol>';
     }
     public function drawInfo(){
+        if(isset($_SESSION['UserScore'])!=true){
+            $_SESSION['CPUScore']='';
+            $_SESSION['UserScore']='';
+        }
         return '
      <p><h2>Select number of sticks</h2></p>
 	 <p>The player who draws the last stick looses</p>
