@@ -25,17 +25,10 @@ class StickModel
         $this->userWin = false;
         $this->cpuWin = false;
         $this->setArr(22);
-    }
-
-    public function setArrAfterDraw($value)
-    {
-
-        $this->setArr($value);
-    }
-
-    public function getCpu()
-    {
-        return $this->cpu;
+        if(isset($_SESSION['UserScore'])!=true){
+            $_SESSION['CPUScore']='';
+            $_SESSION['UserScore']='';
+        }
     }
 
     public function getUserWin()
@@ -79,7 +72,7 @@ class StickModel
         return $this->array1;
     }
 
-    public function getGameEnded()
+    public function getGameEnded() //not using
     {
         return $this->gameEnded;
     }
@@ -119,11 +112,16 @@ class StickModel
      * @param $value substraction value
      * @return array
      */
-    public function calcDraws($value)
+    public function calcDraws($value) //not using
     {
         return $this->array1 = array_splice($this->array1, $value);
     }
 
+    /**
+     * Return a sting of the array
+     * @param $arr
+     * @return string
+     */
     public function printArr($arr)
     {
         if (empty($arr) !== true)
@@ -134,7 +132,7 @@ class StickModel
     /**
      * @param $arr
      */
-    public function arraySize($arr)
+    public function arraySize($arr) //not useing
     {
         echo count($arr);
     }
@@ -145,24 +143,25 @@ class StickModel
     }
 
 
-    public function sticksChecks($stick)
-    {
+    /**
+     * Checks if user draw value is valid. User cant draw higher value if the sticks are fewer.
+     * @param $stick
+     * @return bool
+     */
+    public function sticksChecks($stick){
         $getSessionValue = $_SESSION['sticks'];
         if ($getSessionValue === 3 && $stick = 3) {
             return true;
         } elseif ($getSessionValue === 2 && $stick = 2) {
             return true;
         } elseif ($getSessionValue === 2 && $stick >= 3) {
-          //  echo 'test >2';
             return false;
         }
         if ($getSessionValue === 1 && $stick >= 2) {
             return false;
         } elseif ($getSessionValue === 1 && $stick = 1) {
-          //  echo 'test >1';
             return true;
         } elseif ($getSessionValue === 0 && $stick >= 1) {
-          //  echo 'test 0';
             return false;
         } else {
             return true;
@@ -177,18 +176,20 @@ class StickModel
             $val = $getSessionValue - $value;
             $_SESSION['sticks'] = $val;
             $this->setArr($val);
+
+            //if array is zero, set winner
             if($val==0){
                 if($us==1){
 
+                    //Give score to CPU
                     $_SESSION['CPUScore']+=1;
-                   // echo 'test1';
                       $this->userWin = false;
                        $this->cpuWin = true;
                 }elseif($us==2){
+                    //Give score to User
                     $_SESSION['UserScore']+=1;
                       $this->userWin = true;
                       $this->cpuWin = false;
-                   // echo 'test2';
                 }
             }else{
 
@@ -197,6 +198,11 @@ class StickModel
         }
     }
 
+    /**
+     * Simple AI that plays with user.
+     * CPU draw random number 1-3 if sticks are more than 9.
+     * Setting the last draw as CPU after runtime.
+     */
     public function cpu()
     {
         $variable = rand(1, 3);
@@ -204,23 +210,22 @@ class StickModel
         $this->lastDraw=2;
         if ($getSessionValue >= 9) {
             $this->calcD($variable,2);
-            $this->cpu = $variable;
-            $_SESSION['cpu'] = $this->cpu;
+            $_SESSION['cpu'] = $variable;
         }elseif ($getSessionValue === 8){
             $this->calcD($variable,2);
             $_SESSION['cpu'] = $variable;
         } elseif ($getSessionValue === 7){
-            $this->calcD($variable,2);
-            $_SESSION['cpu'] = $variable;
+            $this->calcD(2,2);
+            $_SESSION['cpu'] = '2';
         } elseif ($getSessionValue === 6){
-            $this->calcD($variable,2);
-            $_SESSION['cpu'] = $variable;
-        } elseif ($getSessionValue === 5) {
             $this->calcD(1,2);
             $_SESSION['cpu'] = '1';
-        } elseif ($getSessionValue === 4) {
+        } elseif ($getSessionValue === 5) {
             $this->calcD($variable,2);
             $_SESSION['cpu'] = $variable;
+        } elseif ($getSessionValue === 4) {
+            $this->calcD(3,2);
+            $_SESSION['cpu'] = '3';
         } elseif ($getSessionValue === 3) {
             $this->calcD(2,2);
             $_SESSION['cpu'] = '2';
@@ -234,6 +239,9 @@ class StickModel
             }
         }
 
+    /**
+     * Setting the last draw as the User
+     */
     public function setUserDraw(){
         $this->lastDraw=1;
     }

@@ -144,7 +144,7 @@ class LoginView{
              <title>Sticks Login</title>
              <meta charset="UTF-8">
              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-             <meta name="theme-color" content="yellow">
+             <meta name="theme-color" content="black">
              <link rel="stylesheet" type="text/css" href="../style.css">
           </head>
           <body>
@@ -181,7 +181,7 @@ class LoginView{
              <title>Sticks Login</title>
              <meta charset="UTF-8">
              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-             <meta name="theme-color" content="blue">
+             <meta name="theme-color" content="black">
              <link rel="stylesheet" type="text/css" href="../style.css">
           </head>
           
@@ -193,13 +193,13 @@ class LoginView{
 				<fieldset>
 					<legend id="legend2">Register a new account </legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
-					<label for="' . self::$usernameReg . '">Username <p id="hide">:</p></label>
+					<label for="' . self::$usernameReg . '">Username</label>
 					<input type="text" id="' . self::$usernameReg . '" name="' . self::$usernameReg . '" value="" />
 					<br>
-					<label for="' . self::$password . '">Password <p id="hide">:</p></label>
+					<label for="' . self::$password . '">Password</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
                     <br>
-					<label for="' . self::$repassword . '">Retype Password <p id="hide">:</p></label>
+					<label for="' . self::$repassword . '">Retype Password</label>
 					<input type="password" id="' . self::$repassword . '" name="' . self::$repassword . '" />
 					<input type="submit" name="' . self::$registerButton . '" value="register" />
 				</fieldset>
