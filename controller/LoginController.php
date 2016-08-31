@@ -19,6 +19,7 @@ class LoginController{
      * @param \view\LoggedUser $loggedUser
      * @param \view\LoginView $lv
      * @param \model\LoginDAL $ld
+     * @param SticksController $sticksController
      */
     public function __construct( \view\LoggedUser $loggedUser ,\view\LoginView $lv, \model\LoginDAL $ld, \controller\SticksController $sticksController)
     {
@@ -39,8 +40,6 @@ class LoginController{
         //user clicked on login button and want to login
         if($this->loginView->wantToLogin() == true){
             $this->loginView->login();
-            /*TODO*/
-            /** Write better redirect function */
             if($this->loginView->loggedIN()==1){
                $this->loginView->redirect();
 
