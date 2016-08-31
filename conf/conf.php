@@ -14,5 +14,5 @@
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
-define('DB_LOGIN_NAME', 'login');
+define('DB_LOGIN_NAME', 'sticks');
 define('DB_LOGIN_TABLE','members');
