@@ -19,6 +19,26 @@ class StickModel{
     public $scoreCPU='';
 
     /**
+     * Restart the game
+     */
+    public function restartGame(){
+        $this->setArr(22);
+    }
+
+    /**
+     * Start the game with 22 sticks if not started
+     */
+    public function startGame(){
+        if(isset($_SESSION['cpu'])!=true){
+            $_SESSION['cpu']='';
+        }
+
+        if(isset($_SESSION['sticks'])!=true){
+            $this->setArray();
+        }
+    }
+
+    /**
      * This function sets the array to size 22 and fills it.
      * Adding score to the session.
      */
@@ -138,6 +158,24 @@ class StickModel{
      */
     public function getArrSize(){
         return count($this->array1);
+    }
+
+    /**
+     * Returns the size of the array
+     * @return int
+     */
+    public function getBackupArrSize($arr){
+        return count($arr);
+    }
+
+    /**
+     * Returns 0 if array size is 0
+     * @return int
+     */
+    public function getArrZero(){
+        if($this->getArrSize()===0){
+            return 0;
+        }
     }
 
 
