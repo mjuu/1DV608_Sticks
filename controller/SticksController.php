@@ -10,16 +10,22 @@ class SticksController{
 
     public $stickV;
     public $loggedU;
-    public $stickMo;
-    public function __construct(\view\SticksView $sticks, \view\LoggedUser $loggedUser){
 
+    /**
+     * SticksController constructor.
+     * @param \view\SticksView $sticks
+     * @param \view\LoggedUser $loggedUser
+     */
+    public function __construct(\view\SticksView $sticks, \view\LoggedUser $loggedUser){
         $this->loggedU=$loggedUser;
         $this->stickV = $sticks;
-        $this->stickMo = new \model\StickModel();
     }
 
+    /**
+     * Do draw control.
+     * If user want to draw 'n'-number this control will make the draw happen
+     */
     public function doControl(){
-
             if($this->stickV->checkIfDraw()===true){
                 if($this->stickV->draw1()==true){
                     $this->stickV->render1();
