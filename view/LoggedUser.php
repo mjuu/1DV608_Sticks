@@ -10,8 +10,8 @@ use model\StickModel;
 
 class LoggedUser{
 
-    private static $member = "member";
-    private static $logout = "logout";
+    private static $member = "LoggedUser::member";
+    private static $logout = "LoggedUser::logout";
     public $stickModel;
 
     /**
