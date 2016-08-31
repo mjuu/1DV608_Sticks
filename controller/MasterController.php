@@ -14,7 +14,6 @@ use view\Sticks;
 class MasterController
 {
     private $loginView;
-    private $loginDal;
     private $loginCont;
     private $loggedU;
     private $stickV;
@@ -24,15 +23,12 @@ class MasterController
      * MasterController constructor.
      * @param \view\SticksView $stV
      * @param \view\LoginView $lv
-     * @param \model\LoginDAL $ld
      * @param LoginController $loginC
      * @param SticksController $sticksController
      * @param LoggedUser $loggedUser
      */
-    public function __construct( \view\SticksView $stV ,\view\LoginView $lv, \model\LoginDAL $ld, \controller\LoginController $loginC, \controller\SticksController $sticksController, \view\LoggedUser $loggedUser)
-    {
+    public function __construct( \view\SticksView $stV ,\view\LoginView $lv, \controller\LoginController $loginC, \controller\SticksController $sticksController, \view\LoggedUser $loggedUser){
         $this->loginView = $lv;
-        $this->loginDal= $ld;
         $this->loginCont = $loginC;
         $this->loggedU = $loggedUser;
         $this->stickV = $stV;
