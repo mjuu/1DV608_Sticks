@@ -55,11 +55,8 @@ class LoggedUser{
     }
 
     /**
-     * Redirect to the member area
+     * Restart the game on request
      */
-    public function redirect(){
-       return header("Location:?member");
-    }
     public function restartGame(){
         $this->stickModel->setArray();
 
