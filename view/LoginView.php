@@ -317,15 +317,11 @@ class LoginView{
     public function loginLinkClicked(){
         return isset($_GET[self::$loginURL]);
     }
-    
+
     /**
      * Redirect user back to the member area
      */
     public function redirect() {
         header("Location: ?restart");
-    }
-
-    public function refreshPage(){
-        header("Refresh:0");
     }
 }
