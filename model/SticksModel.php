@@ -6,8 +6,7 @@
  * Time: 13:50
  */
 namespace model;
-class StickModel
-{
+class StickModel{
 
     public $array1;
     public $cpu;
@@ -19,8 +18,11 @@ class StickModel
     public $scoreUSER='';
     public $scoreCPU='';
 
-    public function setArray()
-    {
+    /**
+     * This function sets the array to size 22 and fills it.
+     * Adding score to the session.
+     */
+    public function setArray(){
         $this->gameEnded = false;
         $this->userWin = false;
         $this->cpuWin = false;
@@ -31,28 +33,42 @@ class StickModel
         }
     }
 
-    public function getUserWin()
-    {
+    /**
+     * Returns 'true' if user wins else returns 'false'.
+     * @return mixed
+     */
+    public function getUserWin(){
         return $this->userWin;
     }
 
-    public function getCPUWin()
-    {
+    /**
+     * Returns 'true' if user CPU else returns 'false'.
+     * @return mixed
+     */
+    public function getCPUWin(){
         return $this->cpuWin;
     }
 
-    public function setUSERWin()
-    {
+    /**
+     * Set userWin to 'true' if user wins and cpuWin to 'false'.
+     */
+    public function setUSERWin(){
         $this->userWin = true;
         $this->cpuWin = false;
     }
 
-    public function setCPUWin()
-    {
+    /**
+     * Set cpuWins to 'true' if CPU wins and userWins to 'false'.
+     */
+    public function setCPUWin(){
         $this->userWin = false;
         $this->cpuWin = true;
     }
 
+    /**
+     * Returns user score.
+     * @return string
+     */
     public function getScoreUser(){
 
         if(isset($_SESSION['UserScore'])) {
@@ -60,6 +76,11 @@ class StickModel
             return 'USER[' . $te . ']';
         }
     }
+
+    /**
+     * Returns CPU score
+     * @return string
+     */
     public function getScoreCPU(){
         if(isset($_SESSION['CPUScore'])){
             $te =$_SESSION['CPUScore'];
@@ -67,39 +88,34 @@ class StickModel
         }
     }
 
-    public function getArr()
-    {
+    /**
+     * Return the array
+     * @return mixed
+     */
+    public function getArr(){
         return $this->array1;
     }
 
-    public function getGameEnded() //not using
-    {
-        return $this->gameEnded;
-    }
-
-    public function getWinner()
-    {
+    /**
+     * Returns the winner if game has ended
+     * @return string
+     */
+    public function getWinner(){
         if ($this->userWin === true) {
-            $this->getGameEnded = true;
-
             return '<br><h1>USER WIN!</h1>';
         } elseif ($this->cpuWin === true) {
-            $this->getGameEnded = true;
-
             return '<h1>CPU WIN!</h1>';
         } else {
-            $this->gameEnded = false;
             return '';
         }
     }
 
     /**
-     * Return an array
-     * @param $arrSize user choose size
+     * Set an array with a size and fill it with 'I'.
+     * @param $arrSize size of the array
      * @return array
      */
-    public function setArr($arrSize)
-    {
+    public function setArr($arrSize){
         $_SESSION['sticks'] = $arrSize;
         if ($arrSize > 0) {
             return $this->array1 = array_fill(1, $arrSize, 'I ');
@@ -107,38 +123,20 @@ class StickModel
     }
 
     /**
-     * Substract array with user value
-     * @param $arr array to alter
-     * @param $value substraction value
-     * @return array
-     */
-    public function calcDraws($value) //not using
-    {
-        return $this->array1 = array_splice($this->array1, $value);
-    }
-
-    /**
      * Return a sting of the array
      * @param $arr
      * @return string
      */
-    public function printArr($arr)
-    {
+    public function printArr($arr){
         if (empty($arr) !== true)
             return implode('', $arr);
     }
 
-
     /**
-     * @param $arr
+     * Returns the size of the array
+     * @return int
      */
-    public function arraySize($arr) //not useing
-    {
-        echo count($arr);
-    }
-
-    public function getArrSize()
-    {
+    public function getArrSize(){
         return count($this->array1);
     }
 
@@ -149,50 +147,69 @@ class StickModel
      * @return bool
      */
     public function sticksChecks($stick){
+
+        //Get stick value from the session
         $getSessionValue = $_SESSION['sticks'];
         if ($getSessionValue === 3 && $stick = 3) {
-            return true;
+            return true; // return true if sticks left is 3 and user want to draw 3.
         } elseif ($getSessionValue === 2 && $stick = 2) {
-            return true;
+            return true; // return true if sticks left is 2 and user want to draw 2.
         } elseif ($getSessionValue === 2 && $stick >= 3) {
-            return false;
+            return false; // return false if sticks left is 2 and user want to draw 3.
         }
         if ($getSessionValue === 1 && $stick >= 2) {
-            return false;
+            return false; // return false if sticks left is 1 and user want to draw 2 or 3.
         } elseif ($getSessionValue === 1 && $stick = 1) {
-            return true;
+            return true; // return true if sticks left is 1 and user want to draw 1.
         } elseif ($getSessionValue === 0 && $stick >= 1) {
-            return false;
+            return false; // return false if sticks left is 0 and user want to draw 1 or more.
         } else {
             return true;
         }
     }
 
+    /**
+     * The main function for the Sticks game.
+     * This function subtract the user and cpu draw
+     * Returns the new array
+     * @param $value
+     * @param $user
+     * @return mixed
+     */
     public function calcD($value,$user){
-
-        $us = $user;
+        //Check if 'sticks' is set in the session
         if (isset($_SESSION['sticks']) == true) {
+
+            //Get sticks left from session
             $getSessionValue = $_SESSION['sticks'];
+
+            //Subtract the sticks with desired value and set $val to the new value.
             $val = $getSessionValue - $value;
+
+            //Set the sticks left in session
             $_SESSION['sticks'] = $val;
+
+            //Setting the array to current stick value that is left.
             $this->setArr($val);
 
             //if array is zero, set winner
             if($val==0){
-                if($us==1){
-
+                if($user==1){ //If user=1 draw the last stick
                     //Give score to CPU
                     $_SESSION['CPUScore']+=1;
-                      $this->userWin = false;
-                       $this->cpuWin = true;
-                }elseif($us==2){
+
+                    //Set winner
+                    $this->userWin = false;
+                    $this->cpuWin = true;
+                }elseif($user==2){ //If CPU=2 draw the last stick
                     //Give score to User
                     $_SESSION['UserScore']+=1;
-                      $this->userWin = true;
-                      $this->cpuWin = false;
+
+                    //Set winner
+                    $this->userWin = true;
+                    $this->cpuWin = false;
                 }
             }else{
-
             }
             return $this->array1;
         }
