@@ -13,7 +13,6 @@ require_once ("controller/SticksController.php");
 require_once("model/LoginDAL.php");
 require_once("model/DBConn.php");
 require_once ("model/SticksModel.php");
-require_once ("model/DrawModel.php");
 require_once("view/LoginView.php");
 require_once("view/LoggedUser.php");
 require_once ("conf/conf.php");
@@ -37,6 +36,6 @@ $stC = new controller\SticksController($stickV,$loggU);
 
 $lc = new \controller\LoginController($loggU,$lv,$ld, $stC);
 
-$c = new controller\MasterController($stickV, $lv, $ld, $lc,$stC,$loggU);
+$c = new controller\MasterController($stickV, $lv, $lc,$stC,$loggU);
 
 $c->doControl();
