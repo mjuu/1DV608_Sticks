@@ -79,6 +79,13 @@ class LoginDAL{
         return $result;
 
     }
+
+    /**
+     * Checks if username is available
+     * Returns true if username exist else returns false.
+     * @param $user
+     * @return bool
+     */
     public function usernameAvailable($user){
         $username1 = $this->checkUserExist($user);
         if($username1['username'] === $user){
