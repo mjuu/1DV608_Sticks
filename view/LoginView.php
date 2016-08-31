@@ -18,7 +18,7 @@ class LoginView{
     private static $repassword = 'LoginView::rePassword';
     private static $messageId = 'LoginView::Message';
     private static $registerButton = "LoginView::register";
-    private static $registerURL = "register";
+    private static $registerURL = "LoginView::register";
     public  $usernameStatus = false;
     public  $passwordStatus = false;
     public  $loginFailed = false;
@@ -27,7 +27,7 @@ class LoginView{
     public $regFail = true;
     public $message;
     public $isUsernameAvailable = null;
-    private static $loginURL = "login";
+    private static $loginURL = "LoginView::login";
     private static $backButton = "";
 
 
@@ -322,6 +322,6 @@ class LoginView{
      * Redirect user back to the member area
      */
     public function redirect() {
-        header("Location: ?restart");
+        header("Location: ?StickView::Start");
     }
 }
